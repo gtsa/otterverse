@@ -82,9 +82,7 @@ For each service, you can create its own subdomain (e.g., `app1.localhost`, `blo
 
 1. Open the `/etc/hosts` file:
    - On **Linux/macOS**, run:
-     ```bash
-     sudo nano /etc/hosts
-     ```
+     `sudo nano /etc/hosts`
    - On **Windows**, open Notepad as Administrator and navigate to:
      `C:\Windows\System32\drivers\etc\hosts`
 
@@ -106,7 +104,12 @@ Now you can access each service via the respective subdomain (e.g., `http://blog
 ## Double Deployment for ChronoQuest
 ChronoQuest is deployed as a separate Docker Compose stack located in the `./chronoquest` directory. To deploy the complete platform, follow these steps:
 
-1. **FIRST, deploy the ChronoQuest Stack:**
+1. **Set up a shared external network named *otterverse-net***
+   ```bash
+   docker network create otterverse-net
+   ```
+
+2. **First deploy the ChronoQuest Stack:**
    ```bash
    cd path/to/chronoquest/folder
    docker-compose down --remove-orphans
@@ -115,7 +118,7 @@ ChronoQuest is deployed as a separate Docker Compose stack located in the `./chr
    ```
    This stack includes the ChronoQuest **db**, **backend**, and **frontend** services (the frontend service is accessible via the network alias `chronoquest-frontend`).
 
-2. **Deploy the OtterVerse Stack:**
+3. **(Having deployed chronoquest stack) Deploy the OtterVerse Stack:**
    ```bash
    cd path/to/ottrerverse/folder
    docker-compose down --remove-orphans
