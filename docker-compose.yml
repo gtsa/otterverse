@@ -4,7 +4,7 @@ services:
     volumes:
       - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
-      - "3000:80"
+      - "80:80"
     depends_on:
       - frontend
       - api
@@ -12,6 +12,7 @@ services:
       - backlog
       - blog
       - python
+
   frontend:
     build:
       context: ./frontend
@@ -26,6 +27,7 @@ services:
       - ".env"
     volumes:
       - ./frontend:/app
+
   api:
     build:
       context: ./api
@@ -39,7 +41,7 @@ services:
     env_file:
       - ".env"
     environment:
-    - HOME=/app
+      - HOME=/app
     depends_on:
       - postgres
       - redis
@@ -91,6 +93,7 @@ services:
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data:rw
+
   redis:
     image: redis:7.0-alpine
     env_file:
@@ -101,6 +104,7 @@ services:
       timeout: 5s
     volumes:
       - redis-data:/data:rw
+
 volumes:
   postgres-data:
   redis-data:
