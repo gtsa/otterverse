@@ -12,6 +12,8 @@ services:
       - backlog
       - blog
       - python
+    networks:
+      - otterverse-net
 
   frontend:
     build:
@@ -27,6 +29,8 @@ services:
       - ".env"
     volumes:
       - ./frontend:/app
+    networks:
+      - otterverse-net
 
   api:
     build:
@@ -49,31 +53,43 @@ services:
       - "3001:3000"
     volumes:
       - ./api:/app
+    networks:
+      - otterverse-net
 
   app1:
     image: nginx:alpine
     volumes:
       - ../app1:/usr/share/nginx/html:ro
+    networks:
+      - otterverse-net
 
   backlog:
     image: nginx:alpine
     volumes:
       - ../backlog:/usr/share/nginx/html:ro
+    networks:
+      - otterverse-net
 
   blog:
     image: nginx:alpine
     volumes:
       - ../blog:/usr/share/nginx/html:ro
+    networks:
+      - otterverse-net
 
   portfolio:
     image: nginx:alpine
     volumes:
       - ../inception:/usr/share/nginx/html:ro
+    networks:
+      - otterverse-net
 
   python:
     image: nginx:alpine
     volumes:
       - ../python:/usr/share/nginx/html:ro
+    networks:
+      - otterverse-net
 
   postgres:
     image: postgres:12.11-alpine
@@ -93,6 +109,8 @@ services:
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data:rw
+    networks:
+      - otterverse-net
 
   redis:
     image: redis:7.0-alpine
@@ -104,7 +122,13 @@ services:
       timeout: 5s
     volumes:
       - redis-data:/data:rw
+    networks:
+      - otterverse-net
 
 volumes:
   postgres-data:
   redis-data:
+
+networks:
+  otterverse-net:
+    external: true
