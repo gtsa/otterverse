@@ -64,6 +64,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # Allow requests from otter-verse.com and www.otter-verse.com
-  config.hosts << "otter-verse.com"
-  config.hosts << "www.otter-verse.com"
+  config.hosts << ENV["REACT_APP_DOMAIN"]
 end

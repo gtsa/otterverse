@@ -11,6 +11,7 @@ interface TileContainerProps {
 const TileContainer: React.FC<TileContainerProps> = ({ links, visible }) => {
   const { t }: { t: (key: string) => string } = useTranslation();
 
+  const domain = process.env.REACT_APP_DOMAIN;
 
   return (
     <div className={`tile-container ${visible ? 'visible' : ''}`}>
@@ -18,7 +19,7 @@ const TileContainer: React.FC<TileContainerProps> = ({ links, visible }) => {
         Object.entries(links).map(([linkKey, value]) => (
           <a
             key={linkKey}
-            href={`http://${value.toLowerCase()}.otter-verse.com`}
+            href={`http://${value.toLowerCase()}.${domain}`}
             target="_blank"
             rel="noopener noreferrer"
             className="tile-link"
