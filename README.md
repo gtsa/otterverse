@@ -35,25 +35,6 @@ OtterVerse is not just a collection of applications—it's a platform to empower
    - API: `http://localhost:3001`
 
 ### **Adding New Services**
-To add a new service or project, place the service directory outside of the root directory of `otterverse` (e.g., `../app1`, `../blog`, etc.) and configure it similarly to the existing services.
-
-For example:
-```plaintext
-otterverse
-  └──
-  └──
-app1
-  └── index.html
-blog
-  └── index.html
-python
-  └── index.html
-chronoquest
-  └──
-  └──
-```
-
-### Adding New Services
 
 To integrate a new service or project into Otterverse, place the new project's directory as a sibling to the Otterverse directory. This ensures that all projects reside at the same level in your workspace. For example, your workspace structure might look like this:
 
