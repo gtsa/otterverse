@@ -85,6 +85,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Allow requests from otter-verse.com and www.otter-verse.com
-  config.hosts << "otter-verse.com"
-  config.hosts << "www.otter-verse.com"
+  config.hosts << ENV["REACT_APP_DOMAIN"]
 end
