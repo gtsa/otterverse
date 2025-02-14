@@ -1,8 +1,10 @@
 services:
   proxy:
-    image: nginx:1.23.3-alpine
-    volumes:
-      - ./proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    environment:
+      - REACT_APP_DOMAIN=${REACT_APP_DOMAIN}
     ports:
       - "80:80"
     depends_on:
@@ -96,15 +98,7 @@ services:
     env_file:
       - ".env"
     healthcheck:
-      test:
-        [
-          "CMD", "pg_isready",
-          "-q",
-          "-d",
-          "${POSTGRES_DB}",
-          "-U",
-          "${POSTGRES_USER}",
-        ]
+      test: ["CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
       retries: 3
       timeout: 5s
     volumes:
