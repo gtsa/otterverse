@@ -20,10 +20,114 @@ http {
   include /etc/nginx/mime.types;
   default_type application/octet-stream;
 
-  # Main Frontend Service
+  # ----------------------------------------------------------
+  # HTTP Blocks: Redirect all HTTP requests to HTTPS
+  # ----------------------------------------------------------
+
+  # Main domain (non-www)
   server {
     listen 80;
-    server_name ${REACT_APP_DOMAIN} www.${REACT_APP_DOMAIN};
+    server_name otter-verse.com;
+    return 301 https://otter-verse.com$request_uri;
+  }
+  # Main domain (www)
+  server {
+    listen 80;
+    server_name www.otter-verse.com;
+    return 301 https://otter-verse.com$request_uri;
+  }
+
+  # App1 (non-www)
+  server {
+    listen 80;
+    server_name app1.otter-verse.com;
+    return 301 https://app1.otter-verse.com$request_uri;
+  }
+  # App1 (www)
+  server {
+    listen 80;
+    server_name www.app1.otter-verse.com;
+    return 301 https://app1.otter-verse.com$request_uri;
+  }
+
+  # Backlog (non-www)
+  server {
+    listen 80;
+    server_name backlog.otter-verse.com;
+    return 301 https://backlog.otter-verse.com$request_uri;
+  }
+  # Backlog (www)
+  server {
+    listen 80;
+    server_name www.backlog.otter-verse.com;
+    return 301 https://backlog.otter-verse.com$request_uri;
+  }
+
+  # Blog (non-www)
+  server {
+    listen 80;
+    server_name blog.otter-verse.com;
+    return 301 https://blog.otter-verse.com$request_uri;
+  }
+  # Blog (www)
+  server {
+    listen 80;
+    server_name www.blog.otter-verse.com;
+    return 301 https://blog.otter-verse.com$request_uri;
+  }
+
+  # Inception Portfolio / Geotsa (non-www)
+  server {
+    listen 80;
+    server_name geotsa.otter-verse.com;
+    return 301 https://geotsa.otter-verse.com$request_uri;
+  }
+  # Geotsa (www)
+  server {
+    listen 80;
+    server_name www.geotsa.otter-verse.com;
+    return 301 https://geotsa.otter-verse.com$request_uri;
+  }
+
+  # Python Apps (non-www)
+  server {
+    listen 80;
+    server_name python.otter-verse.com;
+    return 301 https://python.otter-verse.com$request_uri;
+  }
+  # Python Apps (www)
+  server {
+    listen 80;
+    server_name www.python.otter-verse.com;
+    return 301 https://python.otter-verse.com$request_uri;
+  }
+
+  # Chronoquest (non-www)
+  server {
+    listen 80;
+    server_name chronoquest.otter-verse.com;
+    return 301 https://chronoquest.otter-verse.com$request_uri;
+  }
+  # Chronoquest (www)
+  server {
+    listen 80;
+    server_name www.chronoquest.otter-verse.com;
+    return 301 https://chronoquest.otter-verse.com$request_uri;
+  }
+
+  # ----------------------------------------------------------
+  # HTTPS Blocks: Serve content and handle www redirection
+  # ----------------------------------------------------------
+
+  # HTTPS: Main Frontend Service (non-www)
+  server {
+    listen 443 ssl;
+    server_name otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://frontend:3000/;
@@ -32,8 +136,6 @@ http {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
-
-    # Websocket for automatic reloading
     location /ws {
       proxy_pass http://frontend:3000/ws;
       proxy_http_version 1.1;
@@ -41,7 +143,6 @@ http {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
-
     location /api/ {
       proxy_pass http://api:3000/;
       proxy_http_version 1.1;
@@ -50,71 +151,185 @@ http {
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for App1
+  # HTTPS: Redirect www for main domain
   server {
-    listen 80;
-    server_name app1.${REACT_APP_DOMAIN} www.app1.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://otter-verse.com$request_uri;
+  }
+
+  # HTTPS: App1 (non-www)
+  server {
+    listen 443 ssl;
+    server_name app1.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://app1:80/;
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for Backlog
+  # HTTPS: Redirect www for App1
   server {
-    listen 80;
-    server_name backlog.${REACT_APP_DOMAIN} www.backlog.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.app1.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://app1.otter-verse.com$request_uri;
+  }
+
+   # App1 (www)
+  server {
+    listen 301;
+    server_name www.app1.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://app1.otter-verse.com$request_uri;
+  }
+
+  # HTTPS: Backlog (non-www)
+  server {
+    listen 443 ssl;
+    server_name backlog.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://backlog:80/;
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for Blog
+  # HTTPS: Redirect www for Backlog
   server {
-    listen 80;
-    server_name blog.${REACT_APP_DOMAIN} www.blog.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.backlog.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://backlog.otter-verse.com$request_uri;
+  }
+
+  # HTTPS: Blog (non-www)
+  server {
+    listen 443 ssl;
+    server_name blog.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://blog:80/;
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for Portfolio
+  # HTTPS: Redirect www for Blog
   server {
-    listen 80;
-    server_name geotsa.${REACT_APP_DOMAIN} www.geotsa.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.blog.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://blog.otter-verse.com$request_uri;
+  }
+
+  # HTTPS: Inception Portfolio (geotsa) (non-www)
+  server {
+    listen 443 ssl;
+    server_name geotsa.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://portfolio:80/;
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for Python Apps
+  # HTTPS: Redirect www for geotsa
   server {
-    listen 80;
-    server_name python.${REACT_APP_DOMAIN} www.python.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.geotsa.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://geotsa.otter-verse.com$request_uri;
+  }
+
+  # HTTPS: Python Apps (non-www)
+  server {
+    listen 443 ssl;
+    server_name python.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://python:80/;
       proxy_set_header Host $host;
     }
   }
-
-  # Subdomain for Chronoquest
+  # HTTPS: Redirect www for Python Apps
   server {
-    listen 80;
-    server_name chronoquest.${REACT_APP_DOMAIN} www.chronoquest.${REACT_APP_DOMAIN};
+    listen 443 ssl;
+    server_name www.python.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://python.otter-verse.com$request_uri;
+  }
+
+  # HTTPS: Chronoquest (non-www)
+  server {
+    listen 443 ssl;
+    server_name chronoquest.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
 
     location / {
       proxy_pass http://chronoquest-frontend:4173/;
     }
-
     location /api/ {
       proxy_pass http://chronoquest-backend:5000/;
       proxy_http_version 1.1;
@@ -122,5 +337,17 @@ http {
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
+  }
+  # HTTPS: Redirect www for Chronoquest
+  server {
+    listen 443 ssl;
+    server_name www.chronoquest.otter-verse.com;
+
+    ssl_certificate     /etc/ssl/certs/wildcard_fullchain.pem;
+    ssl_certificate_key /etc/ssl/private/wildcard.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
+    return 301 https://chronoquest.otter-verse.com$request_uri;
   }
 }

@@ -7,6 +7,10 @@ services:
       - REACT_APP_DOMAIN=${REACT_APP_DOMAIN}
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - /etc/ssl/certs/wildcard_fullchain.pem:/etc/ssl/certs/wildcard_fullchain.pem:ro
+      - /etc/ssl/private/wildcard.key:/etc/ssl/private/wildcard.key:ro
     depends_on:
       - frontend
       - api
