@@ -329,12 +329,21 @@ http {
 
     location / {
       proxy_pass http://chronoquest-frontend:4173/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
     }
     location /api/ {
       proxy_pass http://chronoquest-backend:5000/;
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "Upgrade";
+      proxy_set_header Host $host;
+    }
+    location /api/images/ {
+      proxy_pass http://chronoquest-backend:5000/api/images/;
+      proxy_http_version 1.1;
       proxy_set_header Host $host;
     }
   }

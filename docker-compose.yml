@@ -19,7 +19,9 @@ services:
       - blog
       - python
     networks:
-      - otterverse-net
+      otterverse-net:
+        aliases:
+          - chronoquest-backend
 
   frontend:
     build:
@@ -36,7 +38,9 @@ services:
     volumes:
       - ./frontend:/app
     networks:
-      - otterverse-net
+      otterverse-net:
+        aliases:
+          - chronoquest-frontend
 
   api:
     build:
