@@ -4,6 +4,7 @@ services:
       context: ./proxy
       dockerfile: Dockerfile
     environment:
+      - ENVIRONMENT=${ENVIRONMENT}
       - REACT_APP_DOMAIN=${REACT_APP_DOMAIN}
     ports:
       - "80:80"
