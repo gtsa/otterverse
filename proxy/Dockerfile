@@ -5,6 +5,7 @@ RUN apk add --no-cache gettext
 
 # 2) Copy your template Nginx config into the container:
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
+COPY nginx.conf.local.template /etc/nginx/nginx.conf.local.template
 
 # 3) Copy a small entrypoint script that does envsubst
 COPY docker-entrypoint.sh /docker-entrypoint.sh
