@@ -4,6 +4,7 @@ services:
       context: ./proxy
       dockerfile: Dockerfile
     environment:
+      - ENVIRONMENT=${ENVIRONMENT}
       - REACT_APP_DOMAIN=${REACT_APP_DOMAIN}
     ports:
       - "80:80"
@@ -19,17 +20,15 @@ services:
       - blog
       - python
     networks:
-      otterverse-net:
-        aliases:
-          - chronoquest-backend
+      - otterverse-net
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - "UID=${UID:-1000}"
-        - "GID=${GID:-1000}"
+        - "UID=${UID:-1001}"
+        - "GID=${GID:-1001}"
     command: sh -c "yarn install && yarn start"
     user: "${UID}:${GID}"
     restart: "no"
@@ -38,17 +37,15 @@ services:
     volumes:
       - ./frontend:/app
     networks:
-      otterverse-net:
-        aliases:
-          - chronoquest-frontend
+      - otterverse-net
 
   api:
     build:
       context: ./api
       dockerfile: Dockerfile
       args:
-        - "UID=${UID:-1000}"
-        - "GID=${GID:-1000}"
+        - "UID=${UID:-1001}"
+        - "GID=${GID:-1001}"
     command: ["rails", "server", "--binding=0.0.0.0"]
     user: "${UID}:${GID}"
     restart: "no"
