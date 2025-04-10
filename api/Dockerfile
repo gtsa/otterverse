@@ -1,7 +1,7 @@
 FROM ruby:3.1.3-bullseye
 
-ARG UID=1001
-ARG GID=1001
+ARG UID
+ARG GID
 
 RUN groupadd -g ${GID} appuser && \
     useradd -m -u ${UID} -g ${GID} appuser
@@ -15,7 +15,7 @@ ENV RAILS_ROOT /app
 WORKDIR /app
 
 RUN mkdir -p /app/tmp/pids /app/log && \
-    chown -R 1001:1001 /app/tmp /app/log
+    chown -R ${UID}:${GID} /app/tmp /app/log
 
 EXPOSE 3000
 
