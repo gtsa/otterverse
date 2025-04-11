@@ -112,12 +112,16 @@ http {
     listen 80;
     server_name chronoquest.${REACT_APP_DOMAIN} www.chronoquest.${REACT_APP_DOMAIN};
 
+    # Use variables to enable dynamic DNS resolution
+    set $frontend_host http://chronoquest-frontend:4173;
+    set $backend_host http://chronoquest-backend:5000;
+
     location / {
-      proxy_pass http://chronoquest-frontend:4173/;
+      proxy_pass  $frontend_host;
     }
 
     location /api/ {
-      proxy_pass http://chronoquest-backend:5000/;
+      proxy_pass  $backend_host;
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "Upgrade";
