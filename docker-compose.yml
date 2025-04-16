@@ -102,12 +102,17 @@ services:
     image: postgres:12.11-alpine
     env_file:
       - ".env"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     healthcheck:
       test: ["CMD", "pg_isready", "-q", "-d", "${POSTGRES_DB}", "-U", "${POSTGRES_USER}"]
       retries: 3
       timeout: 5s
     volumes:
       - postgres-data:/var/lib/postgresql/data:rw
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     networks:
       - otterverse-net
 
