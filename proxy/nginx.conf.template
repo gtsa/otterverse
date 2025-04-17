@@ -329,8 +329,8 @@ http {
     ssl_ciphers         HIGH:!aNULL:!MD5;
 
     # Use variables to enable dynamic DNS resolution
-    set $frontend_host http://chronoquest-frontend:4173;
-    set $backend_host http://chronoquest-backend:5000;
+    set $frontend_host http://chronoquest-frontend:4173/;
+    set $backend_host http://chronoquest-backend:5000/;
 
     location / {
       proxy_pass $frontend_host;
