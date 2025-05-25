@@ -54,7 +54,7 @@ function App() {
         <h1 className="App-title" onClick={toggleTiles}>
           OtterVerse
         </h1>
-
+        <sup className='signature1'>by <span className='signature2'>geotsa</span></sup>
         {/* Tile Container */}
         <TileContainer links={links} visible={showTiles} />
 
