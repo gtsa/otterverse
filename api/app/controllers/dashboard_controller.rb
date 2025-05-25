@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
   def links
     links = {
       app1: I18n.t('links.app1'),
-      app2: I18n.t('links.app2'),
+      chronoquest: I18n.t('links.chronoquest'),
       api: I18n.t('links.api'),
       imosaic: I18n.t('links.imosaic'),
       backlog: I18n.t('links.backlog'),
