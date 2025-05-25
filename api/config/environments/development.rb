@@ -62,4 +62,16 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Allow requests from otter-verse.com and www.otter-verse.com
+  config.hosts << ENV["REACT_APP_DOMAIN"]
+  config.hosts << "app1.otter-verse.com"
+  config.hosts << "backlog.otter-verse.com"
+  config.hosts << "blog.otter-verse.com"
+  config.hosts << "geotsa.otter-verse.com"
+  config.hosts << "python.otter-verse.com"
+  config.hosts << "chronoquest.otter-verse.com"
+  config.hosts << "otter-verse.com"
+  config.hosts << "www.otter-verse.com"
+
 end

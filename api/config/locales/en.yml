@@ -30,4 +30,19 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  greeting: "Hello World"
+  links:
+    app1: "App1"
+    app2: "App2"
+    chronoquest: "ChronoQuest"
+    api: "API"
+    imosaic: "iMosaic"
+    backlog: "Backlog"
+    portfolio: "geotsa"
+    blog: "Blog"
+    hub: "Hub"
+    python: "Python"
+  errors:
+    fetching_links: "Error fetching links"
+    retry: "Retry"
+    unexpected: "An unexpected error occurred. Please try again later."

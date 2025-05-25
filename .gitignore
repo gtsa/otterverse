@@ -32,3 +32,7 @@ public/assets
 frontend/build/
 frontend/node_modules/
 public/packs
+
+# Ignore bash history
+api/.bash_history
+

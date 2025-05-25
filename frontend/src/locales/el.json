@@ -1,0 +1,16 @@
+{
+  "welcome": "Καλωσήρθατε!",
+  "select_tile": "Διαλέξτε Πλακίδιο!",
+  "error_fetching_links": "Σφάλμα κατά την ανάκτηση των συνδέσμων",
+  "retry": "Δοκιμάστε ξανά",
+  "unexpected_error": "Παρουσιάστηκε ένα απρόβλεπτο σφάλμα. Παρακαλώ προσπαθήστε ξανά αργότερα",
+  "app1": "Εφαρμογή 1",
+  "chronoquest": "Chrono Quest",
+  "api": "API",
+  "imosaic": "iMosaic",
+  "backlog": "Backlog",
+  "portfolio": "Πορτφόλιο",
+  "blog": "Blog",
+  "hub": "Κόμβος",
+  "python": "Python"
+}

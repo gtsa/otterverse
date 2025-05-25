@@ -1,0 +1,35 @@
+.language-switcher {
+  opacity: 0; /* Hidden by default */
+  position: absolute; /* Position the buttons relative to the viewport */
+  bottom: 10px; /* Adjust top positioning as needed */
+  left: 20px; /* Align to the very left */
+  display: flex; /* Keep the buttons inline */
+  text-orientation: sideways;
+  flex-direction: column; /* Stack buttons vertically */
+  transform: translateY(-20%); /* Adjust for perfect centering */
+}
+
+.language-switcher.visible {
+  opacity: 1; /* Fade in */
+  transition: opacity 5s ease; /* Smooth transition */
+}
+
+.language-switcher button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #1b1419;
+  color: #db5757;
+  font-weight: 200;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  transform: rotate(-90deg); /* Rotate buttons 90 degrees */
+  text-align: center;
+}
+
+.language-switcher button:hover {
+  background-color: #1b1419;
+  color: #b80697;
+  transform: rotate(-90deg) scale(1.05);
+}

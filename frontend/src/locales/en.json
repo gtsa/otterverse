@@ -1,0 +1,16 @@
+{
+  "welcome": "Welcome!",
+  "select_tile": "Select Tile",
+  "error_fetching_links": "Error fetching links",
+  "retry": "Retry",
+  "unexpected_error": "An unexpected error occurred. Please try again later",
+  "app1": "App1",
+  "chronoquest": "Chrono Quest",
+  "api": "API",
+  "imosaic": "iMosaic",
+  "backlog": "Backlog",
+  "portfolio": "Portfolio",
+  "blog": "Blog",
+  "hub": "Hub",
+  "python": "Python"
+}

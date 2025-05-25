@@ -1,0 +1,16 @@
+{
+  "welcome": "Bienvenu.e.s!",
+  "select_tile": "Choisissez un Toile",
+  "error_fetching_links": "Erreur lors de la récupération des liens",
+  "retry": "Réessayez",
+  "unexpected_error": "Une erreur inattendue est survenue. Veuillez réessayer plus tard",
+  "app1": "App 1",
+  "chronoquest": "Chrono Quest",
+  "api": "API",
+  "imosaic": "iMosaic",
+  "backlog": "Backlog",
+  "portfolio": "Portfolio",
+  "blog": "Blog",
+  "hub": "Hub",
+  "python": "Python"
+}
