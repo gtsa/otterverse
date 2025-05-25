@@ -11,25 +11,26 @@
   position: relative;
   width: 35vmin;
   height: 35vmin;
-  margin-bottom: 35px;
 }
 
-.App-logo-swirl {
-  height: 35vmin;
-  position: absolute;
-  top: 0;
-  right: -40px;
-  width: 120%;
-  height: 120%;
-}
-
+.App-logo-swirl,
 .App-logo-otter {
-  height: 35vmin;
   position: absolute;
-  top: 0;
-  right: -40px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 120%;
   height: 120%;
+}
+
+.signature1 {
+  margin-top: -1.1rem;
+  transform: translate(80%, -50%);
+  margin-bottom: 10px;
+}
+
+.signature2 {
+  font-weight: 300;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -66,19 +67,19 @@
 
 @keyframes App-logo-spin {
   from {
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   to {
-    transform: rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
 @keyframes App-logo-spin-inverse {
   from {
-    transform: rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg);
   }
   to {
-    transform: rotate(-360deg);
+    transform: translate(-50%, -50%) rotate(-360deg);
   }
 }
 
