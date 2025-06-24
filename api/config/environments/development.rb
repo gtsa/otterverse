@@ -65,7 +65,7 @@ Rails.application.configure do
 
   # Allow requests from otter-verse.com and www.otter-verse.com
   config.hosts << ENV["REACT_APP_DOMAIN"]
-  config.hosts << "app1.otter-verse.com"
+  config.hosts << "asep2025.otter-verse.com"
   config.hosts << "backlog.otter-verse.com"
   config.hosts << "blog.otter-verse.com"
   config.hosts << "geotsa.otter-verse.com"
