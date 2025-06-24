@@ -98,6 +98,13 @@ services:
     networks:
       - otterverse-net
 
+  asep2025:
+    build:
+      context: ../asep2025Quiz
+      dockerfile: Dockerfile
+    networks:
+      - otterverse-net
+
   postgres:
     image: postgres:12.11-alpine
     env_file:
@@ -132,6 +139,9 @@ services:
 volumes:
   postgres-data:
   redis-data:
+  plausible-postgres-data:
+  plausible-clickhouse-data:
+  plausible-data:
 
 networks:
   otterverse-net:

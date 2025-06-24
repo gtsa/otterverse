@@ -20,11 +20,14 @@ http {
   include /etc/nginx/mime.types;
   default_type application/octet-stream;
 
-  # Main Frontend Servicezz
+  # ----------------------------------------------------------
+  # Main Frontend Service
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name ${REACT_APP_DOMAIN} www.${REACT_APP_DOMAIN};
 
+    # Proxy all normal HTTP traffic to the frontend container
     location / {
       proxy_pass http://frontend:3000/;
       proxy_http_version 1.1;
@@ -42,6 +45,7 @@ http {
       proxy_set_header Host $host;
     }
 
+    # API proxy
     location /api/ {
       proxy_pass http://api:3000/;
       proxy_http_version 1.1;
@@ -51,7 +55,9 @@ http {
     }
   }
 
+  # ----------------------------------------------------------
   # Subdomain for App1
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name app1.${REACT_APP_DOMAIN} www.app1.${REACT_APP_DOMAIN};
@@ -62,7 +68,9 @@ http {
     }
   }
 
+  # ----------------------------------------------------------
   # Subdomain for Backlog
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name backlog.${REACT_APP_DOMAIN} www.backlog.${REACT_APP_DOMAIN};
@@ -73,7 +81,9 @@ http {
     }
   }
 
+  # ----------------------------------------------------------
   # Subdomain for Blog
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name blog.${REACT_APP_DOMAIN} www.blog.${REACT_APP_DOMAIN};
@@ -84,7 +94,9 @@ http {
     }
   }
 
-  # Subdomain for Portfolio
+  # ----------------------------------------------------------
+  # Subdomain for Portfolio (geotsa)
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name geotsa.${REACT_APP_DOMAIN} www.geotsa.${REACT_APP_DOMAIN};
@@ -95,7 +107,9 @@ http {
     }
   }
 
+  # ----------------------------------------------------------
   # Subdomain for Python Apps
+  # ----------------------------------------------------------
   server {
     listen 80;
     server_name python.${REACT_APP_DOMAIN} www.python.${REACT_APP_DOMAIN};
@@ -106,22 +120,44 @@ http {
     }
   }
 
-  # Subdomain for Chronoquest
+  # ----------------------------------------------------------
+  # Subdomain for ASEP2025Quiz
+  # ----------------------------------------------------------
   server {
     listen 80;
-    server_name chronoquest.${REACT_APP_DOMAIN} www.chronoquest.${REACT_APP_DOMAIN};
+    server_name asep2025.${REACT_APP_DOMAIN} www.asep2025.${REACT_APP_DOMAIN};
 
     location / {
-      proxy_pass  http://chronoquest-frontend:4173/;
-    }
-
-    location /api/ {
-      proxy_pass  http://chronoquest-backend:5000/;
+      proxy_pass http://asep2025:3000/;
       proxy_http_version 1.1;
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection "Upgrade";
       proxy_set_header Host $host;
     }
+  }
+
+  # ----------------------------------------------------------
+  # Subdomain for Chronoquest
+  # ----------------------------------------------------------
+  server {
+    listen 80;
+    server_name chronoquest.${REACT_APP_DOMAIN} www.chronoquest.${REACT_APP_DOMAIN};
+
+    # Frontend proxy
+    location / {
+      proxy_pass http://chronoquest-frontend:4173/;
+    }
+
+    # Backend API proxy
+    location /api/ {
+      proxy_pass http://chronoquest-backend:5000/;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "Upgrade";
+      proxy_set_header Host $host;
+    }
+
+    # Images endpoint proxy
     location /images/ {
       proxy_pass http://chronoquest-backend:5000/images/;
       proxy_http_version 1.1;
