@@ -22,7 +22,7 @@ function App() {
       try {
         const response = await axios.get('/api/dashboard_links');
         setLinks(response.data.links);
-        setError(null); // Clear any previous errors
+        setError(null);
       } catch (err) {
         if (axios.isAxiosError(err) && err.response) {
           setError(`Error ${err.response.status}: ${err.response.data.message}`);
