@@ -10,8 +10,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - /etc/ssl/certs/wildcard_fullchain.pem:/etc/ssl/certs/wildcard_fullchain.pem:ro
-      - /etc/ssl/private/wildcard.key:/etc/ssl/private/wildcard.key:ro
+      - /etc/letsencrypt/live/otter-verse.com/fullchain.pem:/etc/ssl/certs/wildcard_fullchain.pem:ro
+      - /etc/letsencrypt/live/otter-verse.com/privkey.pem:/etc/ssl/private/wildcard.key:ro
     depends_on:
       - frontend
       - api
@@ -122,6 +122,50 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     networks:
       - otterverse-net
+
+  analytics:
+    image: ghcr.io/plausible/community-edition:v3.0.1
+    command: sh -c "/entrypoint.sh db createdb && /entrypoint.sh db migrate && /entrypoint.sh run"
+    env_file:
+      - ../plausible-analytics/.env
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+      postgres_plausible:
+        condition: service_started
+    ports:
+      - "8000:8000"
+    volumes:
+      - plausible-data:/var/lib/plausible
+    networks:
+      - otterverse-net
+
+  postgres_plausible:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: plausible_db
+      POSTGRES_USER: plausible
+      POSTGRES_PASSWORD: plausiblepass
+    volumes:
+      - plausible-postgres-data:/var/lib/postgresql/data
+    networks:
+      - otterverse-net
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.6
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    volumes:
+      - plausible-clickhouse-data:/var/lib/clickhouse
+    networks:
+      - otterverse-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 -O - http://localhost:8123/ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
   redis:
     image: redis:7.0-alpine
