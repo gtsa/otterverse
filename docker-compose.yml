@@ -56,8 +56,6 @@ services:
     depends_on:
       - postgres
       - redis
-    ports:
-      - "3001:3000"
     volumes:
       - ./api:/app
     networks:
@@ -133,8 +131,6 @@ services:
         condition: service_healthy
       postgres_plausible:
         condition: service_started
-    ports:
-      - "8000:8000"
     volumes:
       - plausible-data:/var/lib/plausible
     networks:
